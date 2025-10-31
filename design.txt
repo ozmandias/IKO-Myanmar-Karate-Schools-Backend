@@ -1,0 +1,3 @@
+Only children table will have parent table as foriegn key.
+No need to add child table as foreign key to parent.
+Example - User is parent table and children tables such as Fighter, Student, Trainer, DojoOperator will have User.id as their foreign key.
