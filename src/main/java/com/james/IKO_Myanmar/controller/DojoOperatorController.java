@@ -76,7 +76,7 @@ public class DojoOperatorController {
 
         ResponseEntity response =
                 ResponseEntity.status(200)
-                        .body(deleteSuccess ? "successfully deleted!" : "delete failed!");
+                        .body(deleteSuccess ? "delete successful!" : "delete failed!");
 
         return response;
     }
