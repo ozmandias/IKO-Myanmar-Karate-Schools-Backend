@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+/*@Controller*/ @RestController
 public class TrainerController {
     private final TrainerService trainerService;
 

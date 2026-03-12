@@ -17,10 +17,14 @@ public class SecurityConfig {
         http
         .authorizeHttpRequests((authorize) -> {
             authorize
-            .requestMatchers(
-                    "/"
-            ).permitAll()
-            .anyRequest().authenticated();
+            /*.requestMatchers(
+                    "/",
+                    "/swagger-ui"
+            )
+            .permitAll()*/
+            .anyRequest()
+            .permitAll();
+            /*.authenticated();*/
         });
 
         return http.build();

@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin @Controller
+@CrossOrigin /*@Controller*/ @RestController
 class UserController {
     private final UserService userService;
 
