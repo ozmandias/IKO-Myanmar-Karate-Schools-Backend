@@ -38,19 +38,19 @@ public class UserSQLRepository {
             boolean create_success = jdbcTemplate.execute(
                     sql,
                     (PreparedStatementCallback<Boolean>) (statement) -> {
-                        statement.setString(1, userData.username);
-                        statement.setString(2, userData.fullName);
-                        statement.setString(3, userData.email);
-                        statement.setString(4, userData.password);
-                        statement.setString(5, userData.phone);
-                        statement.setString(6, userData.address);
-                        statement.setString(7, userData.gender.toString());
-                        statement.setInt(7, userData.rankId);
-                        statement.setString(8, userData.nrcNumber);
-                        statement.setString(9, userData.internationalCard);
-                        statement.setString(10, userData.userType.toString());
-                        statement.setString(11, userData.profileType.toString());
-                        statement.setString(12, userData.status.toString());
+                        statement.setString(1, userData.getUsername());
+                        statement.setString(2, userData.getFullName());
+                        statement.setString(3, userData.getEmail());
+                        statement.setString(4, userData.getPassword());
+                        statement.setString(5, userData.getPhone());
+                        statement.setString(6, userData.getAddress());
+                        statement.setString(7, userData.getGender().toString());
+                        statement.setInt(7, userData.getRankId());
+                        statement.setString(8, userData.getNrcNumber());
+                        statement.setString(9, userData.getInternationalCard());
+                        statement.setString(10, userData.getUserType().toString());
+                        statement.setString(11, userData.getProfileType().toString());
+                        statement.setString(12, userData.getStatus().toString());
                         statement.setTimestamp(13, java.sql.Timestamp.valueOf(LocalDateTime.now()));
 
                         int rowCount = statement.executeUpdate();
@@ -78,7 +78,7 @@ public class UserSQLRepository {
                             ResultSet resultSet = statement.executeQuery();
                             if (resultSet.next()) {
                                 return new User(
-                                        resultSet.getInt("id"),
+                                        resultSet.getLong("id"),
                                         resultSet.getString("username"),
                                         resultSet.getString("full_name"),
                                         resultSet.getString("email"),
@@ -130,7 +130,7 @@ public class UserSQLRepository {
                         while (resultSet.next()) {
                             userList.add(
                                     new User(
-                                            resultSet.getInt("id"),
+                                            resultSet.getLong("id"),
                                             resultSet.getString("username"),
                                             resultSet.getString("full_name"),
                                             resultSet.getString("email"),
@@ -180,7 +180,7 @@ public class UserSQLRepository {
                         ResultSet resultSet = statement.executeQuery();
                         if (resultSet.next()) {
                             return new User(
-                                    resultSet.getInt("id"),
+                                    resultSet.getLong("id"),
                                     resultSet.getString("username"),
                                     resultSet.getString("full_name"),
                                     resultSet.getString("email"),
@@ -222,19 +222,19 @@ public class UserSQLRepository {
             boolean update_success = jdbcTemplate.execute(
                     sql,
                     (PreparedStatementCallback<Boolean>) (statement) -> {
-                        statement.setString(1, userData.username);
-                        statement.setString(2, userData.fullName);
-                        statement.setString(3, userData.email);
-                        statement.setString(4, userData.password);
-                        statement.setString(5, userData.phone);
-                        statement.setString(6, userData.address);
-                        statement.setString(7, userData.gender.toString());
-                        statement.setInt(8, userData.rankId);
-                        statement.setString(9, userData.nrcNumber);
-                        statement.setString(10, userData.internationalCard);
-                        statement.setString(11, userData.userType.toString());
-                        statement.setString(12, userData.profileType.toString());
-                        statement.setString(13, userData.status.toString());
+                        statement.setString(1, userData.getUsername());
+                        statement.setString(2, userData.getFullName());
+                        statement.setString(3, userData.getEmail());
+                        statement.setString(4, userData.getPassword());
+                        statement.setString(5, userData.getPhone());
+                        statement.setString(6, userData.getAddress());
+                        statement.setString(7, userData.getGender().toString());
+                        statement.setInt(8, userData.getRankId());
+                        statement.setString(9, userData.getNrcNumber());
+                        statement.setString(10, userData.getInternationalCard());
+                        statement.setString(11, userData.getUserType().toString());
+                        statement.setString(12, userData.getProfileType().toString());
+                        statement.setString(13, userData.getStatus().toString());
                         statement.setTimestamp(14, Timestamp.valueOf(LocalDateTime.now()));
                         statement.setLong(15, id);
 
@@ -264,7 +264,7 @@ public class UserSQLRepository {
                             ResultSet resultSet = statement.executeQuery();
                             if (resultSet.next()) {
                                 return new User(
-                                        resultSet.getInt("id"),
+                                        resultSet.getLong("id"),
                                         resultSet.getString("username"),
                                         resultSet.getString("full_name"),
                                         resultSet.getString("email"),

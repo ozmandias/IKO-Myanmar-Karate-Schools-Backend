@@ -2,13 +2,12 @@ package com.james.IKO_Myanmar.controllers;
 
 import com.james.IKO_Myanmar.models.Trainer;
 import com.james.IKO_Myanmar.services.TrainerService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /*@Controller*/ @RestController
 public class TrainerController {
@@ -32,11 +31,7 @@ public class TrainerController {
 
     @GetMapping("/trainers/{id}")
     public ResponseEntity getTrainer(@PathVariable("id") Long id) {
-        Optional<Trainer> optionalTrainer = trainerService.getTrainer(id);
-        Trainer trainer = null;
-        if(optionalTrainer.isPresent()) {
-            trainer = optionalTrainer.get();
-        }
+        Trainer trainer = trainerService.getTrainer(id);
 
         ResponseEntity response =
                 ResponseEntity.status(200)
@@ -72,12 +67,12 @@ public class TrainerController {
 
     @DeleteMapping("/trainers/{id}")
     public ResponseEntity deleteTrainer(@PathVariable("id") Long id) {
-        boolean deleteSuccess = trainerService.deleteTrainer(id);
+        trainerService.deleteTrainer(id);
 
-        ResponseEntity response =
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
-                        .body(deleteSuccess ? "delete successful!" : "delete failed!");
+                        .body(deleteSuccess ? "delete successful!" : "delete failed!");*/
 
-        return response;
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

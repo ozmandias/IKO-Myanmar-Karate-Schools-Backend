@@ -1,15 +1,13 @@
 package com.james.IKO_Myanmar.types;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-@Data
 @NoArgsConstructor
+@Getter
+@Setter
 @Builder
 public class PaginationData<T> {
     List<T> content;

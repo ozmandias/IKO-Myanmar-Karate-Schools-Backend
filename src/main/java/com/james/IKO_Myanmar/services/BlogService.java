@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BlogService {
@@ -25,32 +24,25 @@ public class BlogService {
         return blogRepository.findAll();
     }
 
-    public Optional<Blog> getBlog(Long id) {
-        return blogRepository.findById(id);
+    public List<Blog> getBlogsPagination() {
+        return null;
+    }
+
+    public Blog getBlog(Long id) {
+        return blogRepository.findById(id).orElseThrow();
     }
 
     public Blog updateBlog(Long id, Blog blogData) {
-        Optional<Blog> optionalBlog = getBlog(id);
-        Blog blog = null;
-        if(optionalBlog.isPresent()) {
-            blog = optionalBlog.get();
-            blogData.id = blog.id;
-            blogData.createDate = blog.createDate;
-            blogData.updateDate = LocalDateTime.now();
-            blog = blogRepository.save(blogData);
-        }
+        Blog blog = getBlog(id);
+        blogData.id = blog.id;
+        blogData.createDate = blog.createDate;
+        blogData.updateDate = LocalDateTime.now();
+        blog = blogRepository.save(blogData);
         return blog;
     }
 
-    public boolean deleteBlog(Long id) {
-        boolean deleteStatus = false;
-        Optional<Blog> optionalBlog = getBlog(id);
-        Blog blog = null;
-        if(optionalBlog.isPresent()) {
-            blog = optionalBlog.get();
-            blogRepository.delete(blog);
-            deleteStatus = true;
-        }
-        return deleteStatus;
+    public void deleteBlog(Long id) {
+        Blog blog = getBlog(id);
+        blogRepository.delete(blog);
     }
 }

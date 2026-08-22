@@ -1,14 +1,17 @@
 package com.james.IKO_Myanmar.controllers;
 
+import com.james.IKO_Myanmar.dtos.ApiResponse;
+import com.james.IKO_Myanmar.dtos.TrainingsPaginationRequest;
 import com.james.IKO_Myanmar.models.Training;
 import com.james.IKO_Myanmar.services.TrainingService;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /*@Controller*/ @RestController
 public class TrainingController {
@@ -18,7 +21,7 @@ public class TrainingController {
         trainingService = trainingServiceDependency;
     }
 
-    @GetMapping("/trainings")
+    @GetMapping("/trainings/all")
     public ResponseEntity getTrainings() {
         List<Training> trainings = trainingService.getTrainings();
 
@@ -30,13 +33,28 @@ public class TrainingController {
         return  response;
     }
 
+    @GetMapping("/trainings")
+    public ResponseEntity getTrainingsPagination(TrainingsPaginationRequest trainingsPaginationRequest) {
+        Page<Training> trainings = trainingService.getTrainingsPagination(trainingsPaginationRequest);
+
+        ApiResponse apiResponse = new ApiResponse(
+                0000,
+                "",
+                LocalDateTime.now(),
+                trainings
+        );
+
+        ResponseEntity response =
+                ResponseEntity.status(200)
+                        .header("Content-Type", "application/json")
+                        .body(apiResponse);
+        
+        return response;
+    }
+
     @GetMapping("/trainings/{id}")
     public ResponseEntity getTraining(@PathVariable("id") Long id) {
-        Optional<Training> optionalTraining = trainingService.getTraining(id);
-        Training training = null;
-        if(optionalTraining.isPresent()) {
-            training = optionalTraining.get();
-        }
+        Training training = trainingService.getTraining(id);
 
         ResponseEntity response =
                 ResponseEntity.status(200)
@@ -72,12 +90,12 @@ public class TrainingController {
 
     @DeleteMapping("/trainings/{id}")
     public ResponseEntity deleteTraining(@PathVariable("id") Long id) {
-        boolean deleteSuccess = trainingService.deleteTraining(id);
+        trainingService.deleteTraining(id);
 
-        ResponseEntity response =
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
-                        .body(deleteSuccess ? "delete successful!" : "delete failed!");
+                        .body(deleteSuccess ? "delete successful!" : "delete failed!");*/
 
-        return response;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

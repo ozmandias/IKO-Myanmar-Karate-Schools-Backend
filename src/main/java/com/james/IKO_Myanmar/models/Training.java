@@ -2,24 +2,40 @@ package com.james.IKO_Myanmar.models;
 
 import com.james.IKO_Myanmar.enums.TrainingStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity @Table(name = "trainings")
+@AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
 public class Training {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
-    public String notes;
-    @Column(columnDefinition = "ENUM('Ongoing', 'Ended')", nullable = false) @Enumerated(EnumType.STRING)
-    public TrainingStatus status;
-    public LocalDate date;
-    @Column(name = "create_date")
-    public LocalDateTime createDate;
-    @Column(name = "update_date")
-    public LocalDateTime updateDate;
+    Long id;
 
-    public Training(
+    @Column()
+    String notes;
+
+    @Column(name = "class_id", nullable = false)
+    Long classId;
+
+    @Column(columnDefinition = "ENUM('Ongoing', 'Ended')", nullable = false) @Enumerated(EnumType.STRING)
+    TrainingStatus status;
+
+    @Column()
+    LocalDate date;
+
+    @Column(name = "create_date")
+    LocalDateTime createDate;
+
+    @Column(name = "update_date")
+    LocalDateTime updateDate;
+
+    /*public Training(
         int id,
         String notes,
         TrainingStatus status,
@@ -33,5 +49,5 @@ public class Training {
         this.date = date;
         this.createDate = createDate;
         this.updateDate = updateDate;
-    }
+    }*/
 }

@@ -1,12 +1,17 @@
 package com.james.IKO_Myanmar.services;
 
+import com.james.IKO_Myanmar.dtos.ClassesPaginationRequest;
+import com.james.IKO_Myanmar.exceptions.NotFoundException;
 import com.james.IKO_Myanmar.models.Class;
 import com.james.IKO_Myanmar.repositories.ClassRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClassService {
@@ -17,7 +22,7 @@ public class ClassService {
     }
 
     public Class createClass(Class classData) {
-        classData.createDate = LocalDateTime.now();
+        classData.setCreateDate(LocalDateTime.now());
         return classRepository.save(classData);
     }
 
@@ -25,32 +30,32 @@ public class ClassService {
         return classRepository.findAll();
     }
 
-    public Optional<Class> getClass(Long id) {
-        return classRepository.findById(id);
+    public Page<Class> getClassesPagination(ClassesPaginationRequest classesPaginationRequest) {
+        Pageable pageable = PageRequest.of(classesPaginationRequest.getPage(), classesPaginationRequest.getSize(), Sort.by("id").descending());
+        Page<Class> classesPagination = classRepository.findAllBy(
+            classesPaginationRequest.getName(),
+            classesPaginationRequest.getDojoId(),
+            classesPaginationRequest.getStatus(),
+            pageable
+        );
+        return classesPagination;
+    }
+
+    public Class getClass(Long id) {
+        return classRepository.findById(id).orElseThrow(() -> new NotFoundException("Class with id: " + id + "not found!"));
     }
 
     public Class updateClass(Long id, Class classData) {
-        Optional<Class> optionalClass = getClass(id);
-        Class karateClass = null;
-        if(optionalClass.isPresent()) {
-            karateClass = optionalClass.get();
-            classData.id = karateClass.id;
-            classData.createDate = karateClass.createDate;
-            classData.updateDate = LocalDateTime.now();
-            karateClass = classRepository.save(classData);
-        }
+        Class karateClass = getClass(id);
+        classData.setId(karateClass.getId());
+        classData.setCreateDate(karateClass.getCreateDate());
+        classData.setUpdateDate(LocalDateTime.now());
+        karateClass = classRepository.save(classData);
         return karateClass;
     }
 
-    public boolean deleteClass(Long id) {
-        boolean deleteStatus = false;
-        Optional<Class> optionalClass = getClass(id);
-        Class karateClass = null;
-        if(optionalClass.isPresent()) {
-            karateClass = optionalClass.get();
-            classRepository.delete(karateClass);
-            deleteStatus = true;
-        }
-        return  deleteStatus;
+    public void deleteClass(Long id) {
+        Class karateClass = getClass(id);
+        classRepository.delete(karateClass);
     }
 }

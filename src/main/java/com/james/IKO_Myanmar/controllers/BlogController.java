@@ -2,13 +2,12 @@ package com.james.IKO_Myanmar.controllers;
 
 import com.james.IKO_Myanmar.models.Blog;
 import com.james.IKO_Myanmar.services.BlogService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /*@Controller*/ @RestController
 public class BlogController {
@@ -32,11 +31,7 @@ public class BlogController {
 
     @GetMapping("/blogs/{id}")
     public ResponseEntity getBlog(@PathVariable("id") Long id) {
-        Optional<Blog> optionalBlog = blogService.getBlog(id);
-        Blog blog = null;
-        if(optionalBlog.isPresent()) {
-            blog = optionalBlog.get();
-        }
+        Blog blog = blogService.getBlog(id);
 
         ResponseEntity response =
                 ResponseEntity.status(200)
@@ -72,12 +67,12 @@ public class BlogController {
 
     @DeleteMapping("/blogs/{id}")
     public ResponseEntity deleteBlog(@PathVariable("id") Long id) {
-        boolean deleteSuccess = blogService.deleteBlog(id);
+        blogService.deleteBlog(id);
 
-        ResponseEntity response =
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
-                        .body(deleteSuccess == true ? "delete successful!" : "delete failed!");
+                        .body(deleteSuccess == true ? "delete successful!" : "delete failed!");*/
 
-        return response;
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -9,13 +9,13 @@ import java.time.LocalDateTime;
 @Entity @Table(name = "trainers")
 public class Trainer {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
+    public Long id;
     @Column(nullable = false)
     public String name;
     @Column(name = "rank_id", nullable = false)
-    public int rankId;
+    public Integer rankId;
     @Column(name = "user_id", nullable = false)
-    public int userId;
+    public Long userId;
     @Column(columnDefinition = "ENUM('InService', 'Retired', 'Resigned', 'Dismissed')", nullable = false) @Enumerated(EnumType.STRING)
     public TrainerStatus status;
     @Column(name = "service_start_date")
@@ -26,10 +26,10 @@ public class Trainer {
     public LocalDateTime updateDate;
 
     public Trainer(
-        int id,
+        Long id,
         String name,
-        int rankId,
-        int userId,
+        Integer rankId,
+        Long userId,
         TrainerStatus status,
         LocalDate serviceStartDate,
         LocalDateTime createDate,

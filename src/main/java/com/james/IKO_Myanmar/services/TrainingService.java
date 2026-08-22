@@ -1,12 +1,16 @@
 package com.james.IKO_Myanmar.services;
 
+import com.james.IKO_Myanmar.dtos.TrainingsPaginationRequest;
+import com.james.IKO_Myanmar.exceptions.NotFoundException;
 import com.james.IKO_Myanmar.models.Training;
 import com.james.IKO_Myanmar.repositories.TrainingRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TrainingService {
@@ -17,7 +21,7 @@ public class TrainingService {
     }
 
     public Training createTraining(Training trainingData) {
-        trainingData.createDate = LocalDateTime.now();
+        trainingData.setCreateDate(LocalDateTime.now());
         return trainingRepository.save(trainingData);
     }
 
@@ -25,32 +29,30 @@ public class TrainingService {
         return trainingRepository.findAll();
     }
 
-    public Optional<Training> getTraining(Long id) {
-        return trainingRepository.findById(id);
+    public Page<Training> getTrainingsPagination(TrainingsPaginationRequest trainingsPaginationRequest) {
+        Pageable pageable = PageRequest.of(trainingsPaginationRequest.getPage(), trainingsPaginationRequest.getSize());
+        Page<Training> trainingsPagination = trainingRepository.findAllBy(
+          trainingsPaginationRequest.getDate(),
+          pageable
+        );
+        return trainingsPagination;
+    }
+
+    public Training getTraining(Long id) {
+        return trainingRepository.findById(id).orElseThrow(() -> new NotFoundException("Training with id: " + id + " not found!"));
     }
 
     public Training updateTraining(Long id, Training trainingData) {
-        Optional<Training> optionalTraining = getTraining(id);
-        Training training = null;
-        if(optionalTraining.isPresent()) {
-            training = optionalTraining.get();
-            trainingData.id = training.id;
-            trainingData.createDate = training.createDate;
-            trainingData.updateDate = LocalDateTime.now();
-            training = trainingRepository.save(trainingData);
-        }
+        Training training = getTraining(id);
+        trainingData.setId(training.getId());
+        trainingData.setCreateDate(training.getCreateDate());
+        trainingData.setUpdateDate(LocalDateTime.now());
+        training = trainingRepository.save(trainingData);
         return training;
     }
 
-    public boolean deleteTraining(Long id) {
-        boolean deleteStatus = false;
-        Optional<Training> optionalTraining = getTraining(id);
-        Training training = null;
-        if(optionalTraining.isPresent()) {
-            training = optionalTraining.get();
-            trainingRepository.delete(training);
-            deleteStatus = true;
-        }
-        return deleteStatus;
+    public void deleteTraining(Long id) {
+        Training training = getTraining(id);
+        trainingRepository.delete(training);
     }
 }

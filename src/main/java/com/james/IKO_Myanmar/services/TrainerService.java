@@ -1,12 +1,12 @@
 package com.james.IKO_Myanmar.services;
 
+import com.james.IKO_Myanmar.exceptions.NotFoundException;
 import com.james.IKO_Myanmar.models.Trainer;
 import com.james.IKO_Myanmar.repositories.TrainerRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TrainerService {
@@ -25,32 +25,21 @@ public class TrainerService {
         return trainerRepository.findAll();
     }
 
-    public Optional<Trainer> getTrainer(Long id) {
-        return trainerRepository.findById(id);
+    public Trainer getTrainer(Long id) {
+        return trainerRepository.findById(id).orElseThrow(() -> new NotFoundException("Trainer with id: " + id + " not found!"));
     }
 
     public Trainer updateTrainer(Long id, Trainer trainerData) {
-        Optional<Trainer> optionalTrainer = getTrainer(id);
-        Trainer trainer = null;
-        if(optionalTrainer.isPresent()) {
-            trainer = optionalTrainer.get();
-            trainerData.id = trainer.id;
-            trainerData.createDate = trainer.createDate;
-            trainerData.updateDate = LocalDateTime.now();
-            trainer = trainerRepository.save(trainerData);
-        }
+        Trainer trainer = getTrainer(id);
+        trainerData.id = trainer.id;
+        trainerData.createDate = trainer.createDate;
+        trainerData.updateDate = LocalDateTime.now();
+        trainer = trainerRepository.save(trainerData);
         return trainer;
     }
 
-    public boolean deleteTrainer(Long id) {
-        boolean deleteStatus = false;
-        Optional<Trainer> optionalTrainer = getTrainer(id);
-        Trainer trainer = null;
-        if(optionalTrainer.isPresent()) {
-            trainer = optionalTrainer.get();
-            trainerRepository.delete(trainer);
-            deleteStatus = true;
-        }
-        return deleteStatus;
+    public void deleteTrainer(Long id) {
+        Trainer trainer = getTrainer(id);
+        trainerRepository.delete(trainer);
     }
 }

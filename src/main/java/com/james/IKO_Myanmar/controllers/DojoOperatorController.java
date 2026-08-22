@@ -2,13 +2,12 @@ package com.james.IKO_Myanmar.controllers;
 
 import com.james.IKO_Myanmar.models.DojoOperator;
 import com.james.IKO_Myanmar.services.DojoOperatorService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /*@Controller*/ @RestController
 public class DojoOperatorController {
@@ -32,11 +31,7 @@ public class DojoOperatorController {
 
     @GetMapping("/dojo_operators/{id}")
     public ResponseEntity getDojoOperator(@PathVariable("id") Long id) {
-        Optional<DojoOperator> optionalDojoOperator = dojoOperatorService.getDojoOperator(id);
-        DojoOperator dojoOperator = null;
-        if(optionalDojoOperator.isPresent()) {
-            dojoOperator = optionalDojoOperator.get();
-        }
+        DojoOperator dojoOperator = dojoOperatorService.getDojoOperator(id);
 
         ResponseEntity response =
                 ResponseEntity.status(200)
@@ -72,12 +67,12 @@ public class DojoOperatorController {
 
     @DeleteMapping("dojo_operators/{id}")
     public ResponseEntity deleteDojoOperator(@PathVariable("id") Long id) {
-        boolean deleteSuccess = dojoOperatorService.deleteDojoOperator(id);
+        dojoOperatorService.deleteDojoOperator(id);
 
-        ResponseEntity response =
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
-                        .body(deleteSuccess ? "delete successful!" : "delete failed!");
+                        .body(deleteSuccess ? "delete successful!" : "delete failed!");*/
 
-        return response;
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

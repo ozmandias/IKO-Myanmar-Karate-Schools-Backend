@@ -1,12 +1,17 @@
 package com.james.IKO_Myanmar.services;
 
+import com.james.IKO_Myanmar.dtos.DojosPaginationRequest;
+import com.james.IKO_Myanmar.exceptions.NotFoundException;
 import com.james.IKO_Myanmar.models.Dojo;
 import com.james.IKO_Myanmar.repositories.DojoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DojoService {
@@ -17,7 +22,7 @@ public class DojoService {
     }
 
     public Dojo createDojo(Dojo dojoData) {
-        dojoData.createDate = LocalDateTime.now();
+        dojoData.setCreateDate(LocalDateTime.now());
         return dojoRepository.save(dojoData);
     }
 
@@ -25,32 +30,34 @@ public class DojoService {
         return dojoRepository.findAll();
     }
 
-    public Optional<Dojo> getDojo(Long id) {
-        return dojoRepository.findById(id);
+    public Page<Dojo> getDojosPagination(DojosPaginationRequest dojosPaginationRequest) {
+        Pageable pageable = PageRequest.of(dojosPaginationRequest.getPage(), dojosPaginationRequest.getSize(), Sort.by("id").descending());
+        Page<Dojo> dojosPagination = dojoRepository.findAllBy(
+                dojosPaginationRequest.getName(),
+                dojosPaginationRequest.getState(),
+                dojosPaginationRequest.getCity(),
+                dojosPaginationRequest.getTownship(),
+                dojosPaginationRequest.getStreet(),
+                pageable
+        );
+        return dojosPagination;
+    }
+
+    public Dojo getDojo(Long id) {
+        return dojoRepository.findById(id).orElseThrow(() -> new NotFoundException("Dojo with id: " + id + "not found!"));
     }
 
     public Dojo updateDojo(Long id, Dojo dojoData) {
-        Optional<Dojo> optionalDojo = getDojo(id);
-        Dojo dojo = null;
-        if(optionalDojo.isPresent()) {
-            dojo = optionalDojo.get();
-            dojoData.id = dojo.id;
-            dojoData.createDate = dojo.createDate;
-            dojoData.updateDate = LocalDateTime.now();
-            dojo = dojoRepository.save(dojoData);
-        }
+        Dojo dojo = getDojo(id);
+        dojoData.setId(dojo.getId());
+        dojoData.setCreateDate(dojo.getCreateDate());
+        dojoData.setUpdateDate(LocalDateTime.now());
+        dojo = dojoRepository.save(dojoData);
         return dojo;
     }
 
-    public boolean deleteDojo(Long id) {
-        boolean deleteStatus = false;
-        Optional<Dojo> optionalDojo = dojoRepository.findById(id);
-        Dojo dojo = null;
-        if(optionalDojo.isPresent()) {
-            dojo = optionalDojo.get();
-            dojoRepository.delete(dojo);
-            deleteStatus = true;
-        }
-        return deleteStatus;
+    public void deleteDojo(Long id) {
+        Dojo dojo = getDojo(id);
+        dojoRepository.delete(dojo);
     }
 }

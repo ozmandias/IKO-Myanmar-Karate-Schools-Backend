@@ -2,13 +2,12 @@ package com.james.IKO_Myanmar.controllers;
 
 import com.james.IKO_Myanmar.models.Student;
 import com.james.IKO_Myanmar.services.StudentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /*@Controller*/ @RestController
 public class StudentController {
@@ -32,11 +31,7 @@ public class StudentController {
 
     @GetMapping("/students/{id}")
     public ResponseEntity getStudent(@PathVariable("id") Long id) {
-        Optional<Student> optionalStudent = studentService.getStudent(id);
-        Student student = null;
-        if(optionalStudent.isPresent()) {
-            student = optionalStudent.get();
-        }
+        Student student = studentService.getStudent(id);
 
         ResponseEntity response =
                 ResponseEntity.status(200)
@@ -72,12 +67,12 @@ public class StudentController {
 
     @DeleteMapping("/students/{id}")
     public ResponseEntity deleteStudent(@PathVariable("id") Long id) {
-        boolean deleteSuccess = studentService.deleteStudent(id);
+        studentService.deleteStudent(id);
 
-        ResponseEntity response =
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
-                        .body(deleteSuccess ? "delete successful!" : "delete failed!");
+                        .body(deleteSuccess ? "delete successful!" : "delete failed!");*/
 
-        return response;
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

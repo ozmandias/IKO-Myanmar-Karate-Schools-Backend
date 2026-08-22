@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 @Entity @Table(name = "students")
 public class Student {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
+    public Long id;
     @Column(nullable = false)
     public String name;
     @Column(name = "rank_id", nullable = false)
-    public int rankId;
+    public Integer rankId;
     @Column(name = "user_id", nullable = false)
-    public int userId;
-    @Column(columnDefinition = "ENUM('Learning', 'Graduated', 'OnLeave', 'Quitted', 'Banned')", nullable = false) @Enumerated(EnumType.STRING)
+    public Long userId;
+    @Column(columnDefinition = "ENUM('Learning', 'Graduated', 'OnLeave', 'Quit', 'Banned')", nullable = false) @Enumerated(EnumType.STRING)
     public StudentStatus status;
     @Column(name = "join_date")
     public LocalDate joinDate;
@@ -26,10 +26,10 @@ public class Student {
     public LocalDateTime updateDate;
 
     public Student(
-        int id,
+        Long id,
         String name,
-        int rankId,
-        int userId,
+        Integer rankId,
+        Long userId,
         StudentStatus status,
         LocalDate joinDate,
         LocalDateTime createDate,

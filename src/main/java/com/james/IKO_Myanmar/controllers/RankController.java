@@ -2,13 +2,12 @@ package com.james.IKO_Myanmar.controllers;
 
 import com.james.IKO_Myanmar.models.Rank;
 import com.james.IKO_Myanmar.services.RankService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /*@Controller*/ @RestController
 public class RankController {
@@ -32,11 +31,7 @@ public class RankController {
 
     @GetMapping("/ranks/{id}")
     public ResponseEntity getRank(@PathVariable("id") int id) {
-        Optional<Rank> optionalRank = rankService.getRank(id);
-        Rank rank = null;
-        if(optionalRank.isPresent()) {
-            rank = optionalRank.get();
-        }
+        Rank rank = rankService.getRank(id);
 
         ResponseEntity response =
                 ResponseEntity.status(200)
@@ -72,12 +67,12 @@ public class RankController {
 
     @DeleteMapping("ranks/{id}")
     public ResponseEntity deleteRank(@PathVariable("id") int id) {
-        boolean deleteSuccess = rankService.deleteRank(id);
+        rankService.deleteRank(id);
 
-        ResponseEntity response =
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
-                        .body(deleteSuccess ? "delete successful!" : "delete failed!");
+                        .body(deleteSuccess ? "delete successful!" : "delete failed!");*/
 
-        return response;
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

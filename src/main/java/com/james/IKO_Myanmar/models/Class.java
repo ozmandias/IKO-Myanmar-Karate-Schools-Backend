@@ -4,6 +4,10 @@ import com.james.IKO_Myanmar.converters.DayOfWeekSetConverter;
 import com.james.IKO_Myanmar.enums.ClassStatus;
 import com.james.IKO_Myanmar.enums.DayOfWeek;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,28 +15,40 @@ import java.time.LocalTime;
 import java.util.Set;
 
 @Entity @Table(name = "classes")
+@AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
 public class Class {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
-    @Column(nullable = false)
-    public String name;
-    @Column(nullable = false)
-    public int dojoId;
-    @Column(nullable = false)
-    public int trainingId;
-    @Column(nullable = false)
-    public LocalTime startingTime;
-    @Column(nullable = false)
-    public LocalTime closingTime;
-    @Column(columnDefinition = "SET('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')") @Convert(converter = DayOfWeekSetConverter.class)
-    public Set<DayOfWeek> openingDays;
-    @Column(columnDefinition = "ENUM('Started', 'Finished', 'Cancelled', 'Discontinued')", nullable = false) @Enumerated(EnumType.STRING)
-    public ClassStatus status;
-    public LocalDate startDate;
-    public LocalDateTime createDate;
-    public LocalDateTime updateDate;
+    Long id;
 
-    public Class(
+    @Column(nullable = false)
+    String name;
+
+    @Column(name = "dojo_id", nullable = false)
+    Long dojoId;
+
+    @Column(name = "starting_time", nullable = false)
+    LocalTime startingTime;
+
+    @Column(name = "closing_time", nullable = false)
+    LocalTime closingTime;
+
+    @Column(name = "opening_days", columnDefinition = "SET('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')") @Convert(converter = DayOfWeekSetConverter.class)
+    Set<DayOfWeek> openingDays;
+
+    @Column(columnDefinition = "ENUM('Started', 'Finished', 'Cancelled', 'Discontinued')", nullable = false) @Enumerated(EnumType.STRING)
+    ClassStatus status;
+
+    @Column()
+    LocalDate date;
+
+    @Column(name = "create_date")
+    LocalDateTime createDate;
+
+    @Column(name = "update_date")
+    LocalDateTime updateDate;
+
+    /*public Class(
         int id,
         String name,
         int dojoId,
@@ -53,8 +69,8 @@ public class Class {
         this.closingTime = closingTime;
         this.openingDays = openingDays;
         this.status = status;
-        this.startDate = startDate;
+        this.date = date;
         this.createDate = createDate;
         this.updateDate = updateDate;
-    }
+    }*/
 }

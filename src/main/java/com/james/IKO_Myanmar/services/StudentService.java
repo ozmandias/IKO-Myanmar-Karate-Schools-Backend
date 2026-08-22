@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -25,32 +24,25 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Optional<Student> getStudent(Long id) {
-        return studentRepository.findById(id);
+    public List<Student> getStudentsPagination() {
+        return null;
+    }
+
+    public Student getStudent(Long id) {
+        return studentRepository.findById(id).orElseThrow();
     }
 
     public Student updateStudent(Long id, Student studentData) {
-        Optional<Student> optionalStudent = getStudent(id);
-        Student student = null;
-        if(optionalStudent.isPresent()) {
-            student = optionalStudent.get();
-            studentData.id = student.id;
-            studentData.createDate = student.createDate;
-            studentData.updateDate = LocalDateTime.now();
-            student = studentRepository.save(studentData);
-        }
+        Student student = getStudent(id);
+        studentData.id = student.id;
+        studentData.createDate = student.createDate;
+        studentData.updateDate = LocalDateTime.now();
+        student = studentRepository.save(studentData);
         return student;
     }
 
-    public boolean deleteStudent(Long id) {
-        boolean deleteStatus = false;
-        Optional<Student> optionalStudent = studentRepository.findById(id);
-        Student student = null;
-        if(optionalStudent.isPresent()) {
-            student = optionalStudent.get();
-            studentRepository.delete(student);
-            deleteStatus = true;
-        }
-        return deleteStatus;
+    public void deleteStudent(Long id) {
+        Student student = getStudent(id);
+        studentRepository.delete(student);
     }
 }

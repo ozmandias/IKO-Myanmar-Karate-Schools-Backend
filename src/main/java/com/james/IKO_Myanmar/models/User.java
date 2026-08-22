@@ -5,45 +5,63 @@ import com.james.IKO_Myanmar.enums.UserGender;
 import com.james.IKO_Myanmar.enums.UserStatus;
 import com.james.IKO_Myanmar.enums.UserType;
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Entity @Table(name = "users") @NoArgsConstructor
+@Entity @Table(name = "users")
+@AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
-    @Column(nullable = false)
-    public String username;
-    @Column(name = "full_name", nullable = false)
-    public String fullName;
-    @Column(nullable = false)
-    public String email;
-    @Column(nullable = false)
-    public String password;
-    public String phone;
-    @Column(nullable = false)
-    public String address;
-    @Column(columnDefinition = "ENUM('Male', 'Female') DEFAULT 'Male'", nullable = false) @Enumerated(EnumType.STRING)
-    public UserGender gender;
-    @Column(name = "rank_id", nullable = false)
-    public int rankId;
-    @Column(name = "nrc_number")
-    public String nrcNumber;
-    @Column(name = "international_card")
-    public String internationalCard;
-    @Column(name = "user_type", nullable = false) @Enumerated(EnumType.STRING)
-    public UserType userType;
-    @Column(name = "profile_type", nullable = false) @Enumerated(EnumType.STRING)
-    public ProfileType profileType;
-    @Column(nullable = false) @Enumerated(EnumType.STRING)
-    public UserStatus status;
-    @Column(name = "create_date")
-    public LocalDateTime createDate;
-    @Column(name = "update_date")
-    public LocalDateTime updateDate;
+    Long id;
 
-    public User(
+    @Column(nullable = false)
+    String username;
+
+    @Column(name = "full_name", nullable = false)
+    String fullName;
+
+    @Column(nullable = false)
+    String email;
+
+    @Column(nullable = false)
+    String password;
+
+    @Column(nullable = true)
+    String phone;
+
+    @Column(nullable = false)
+    String address;
+
+    @Column(columnDefinition = "ENUM('Male', 'Female') DEFAULT 'Male'", nullable = false) @Enumerated(EnumType.STRING)
+    UserGender gender;
+
+    @Column(name = "rank_id", nullable = false)
+    int rankId;
+
+    @Column(name = "nrc_number")
+    String nrcNumber;
+
+    @Column(name = "international_card")
+    String internationalCard;
+
+    @Column(name = "user_type", nullable = false) @Enumerated(EnumType.STRING)
+    UserType userType;
+
+    @Column(name = "profile_type", nullable = false) @Enumerated(EnumType.STRING)
+    ProfileType profileType;
+
+    @Column(nullable = false) @Enumerated(EnumType.STRING)
+    UserStatus status;
+
+    @Column(name = "create_date")
+    LocalDateTime createDate;
+
+    @Column(name = "update_date")
+    LocalDateTime updateDate;
+
+    /*public User(
             int id,
             String username,
             String fullName,
@@ -77,5 +95,5 @@ public class User {
         this.status = status;
         this.createDate = createDate;
         this.updateDate = updateDate;
-    }
+    }*/
 }

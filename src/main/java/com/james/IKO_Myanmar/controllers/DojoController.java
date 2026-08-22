@@ -1,14 +1,17 @@
 package com.james.IKO_Myanmar.controllers;
 
+import com.james.IKO_Myanmar.dtos.ApiResponse;
+import com.james.IKO_Myanmar.dtos.DojosPaginationRequest;
 import com.james.IKO_Myanmar.models.Dojo;
 import com.james.IKO_Myanmar.services.DojoService;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /*@Controller*/ @RestController
 public class DojoController {
@@ -18,7 +21,7 @@ public class DojoController {
         this.dojoService = dojoServiceDependency;
     }
 
-    @GetMapping("/dojos")
+    @GetMapping("/dojos/all")
     public ResponseEntity getDojos() {
         List<Dojo> dojos = dojoService.getDojos();
 
@@ -30,13 +33,28 @@ public class DojoController {
         return respone;
     }
 
+    @GetMapping("/dojos")
+    public ResponseEntity getDojosPagination(DojosPaginationRequest dojosPaginationRequest) {
+        Page<Dojo> dojos = dojoService.getDojosPagination(dojosPaginationRequest);
+
+        ApiResponse apiResponse = new ApiResponse<>(
+                0000,
+                "",
+                LocalDateTime.now(),
+                dojos
+        );
+
+        ResponseEntity response =
+                ResponseEntity.status(200)
+                        .header("Content-Type", "application/json")
+                        .body(apiResponse);
+
+        return response;
+    }
+
     @GetMapping("/dojos/{id}")
     public ResponseEntity getDojo(@PathVariable("id") Long id) {
-        Optional<Dojo> optionalDojo = dojoService.getDojo(id);
-        Dojo dojo = null;
-        if(optionalDojo.isPresent()) {
-            dojo = optionalDojo.get();
-        }
+        Dojo dojo = dojoService.getDojo(id);
 
         ResponseEntity response =
                 ResponseEntity.status(200)
@@ -72,12 +90,12 @@ public class DojoController {
 
     @DeleteMapping("/dojos/{id}")
     public ResponseEntity deleteDojo(@PathVariable("id") Long id) {
-        boolean deleteSuccess = dojoService.deleteDojo(id);
+        dojoService.deleteDojo(id);
 
-        ResponseEntity response =
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
-                        .body(deleteSuccess ? "delete successful!" : "delete failed!");
+                        .body(deleteSuccess ? "delete successful!" : "delete failed!");*/
 
-        return response;
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

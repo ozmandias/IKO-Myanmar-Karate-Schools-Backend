@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity @Table(name="blogs")
 public class Blog {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
+    public Long id;
     @Column(nullable = false)
     public String title;
     @Column(nullable = false)
@@ -26,7 +26,7 @@ public class Blog {
     public LocalDateTime updateDate;
 
     public Blog(
-            int id,
+            Long id,
             String title,
             String text,
             String imageLocation,

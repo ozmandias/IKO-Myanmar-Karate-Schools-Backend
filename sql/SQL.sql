@@ -1,4 +1,4 @@
--- writing fields are reverse declaration which is different from Programming. Example - dataType fieldName -reverse-> fieldName DATATYPE
+-- writing fields are reverse declaration which is different from Programming. Example - dataType fieldName -reverse-> fieldNametrainings DATATYPE
 
 CREATE TABLE users(
 	id INT UNSIGNED NOT NULL,

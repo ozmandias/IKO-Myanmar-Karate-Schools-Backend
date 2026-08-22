@@ -5,7 +5,6 @@ import com.james.IKO_Myanmar.repositories.RankRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RankService {
@@ -23,30 +22,23 @@ public class RankService {
         return rankRepository.findAll();
     }
 
-    public Optional<Rank> getRank(int id) {
-        return rankRepository.findById(id);
+    public List<Rank> getRanksPagination() {
+        return null;
+    }
+
+    public Rank getRank(int id) {
+        return rankRepository.findById(id).orElseThrow();
     }
 
     public Rank updateRank(int id, Rank rankData) {
-        Optional<Rank> optionalRank = getRank(id);
-        Rank rank = null;
-        if(optionalRank.isPresent()) {
-            rank = optionalRank.get();
-            rankData.id = rank.id;
-            rank = rankRepository.save(rankData);
-        }
+        Rank rank = getRank(id);
+        rankData.id = rank.id;
+        rank = rankRepository.save(rankData);
         return rank;
     }
 
-    public boolean deleteRank(int id) {
-        boolean deleteStatus = false;
-        Optional<Rank> optionalRank = getRank(id);
-        Rank rank = null;
-        if(optionalRank.isPresent()) {
-            rank = optionalRank.get();
-            rankRepository.delete(rank);
-            deleteStatus = true;
-        }
-        return deleteStatus;
+    public void deleteRank(int id) {
+        Rank rank = getRank(id);
+        rankRepository.delete(rank);
     }
 }

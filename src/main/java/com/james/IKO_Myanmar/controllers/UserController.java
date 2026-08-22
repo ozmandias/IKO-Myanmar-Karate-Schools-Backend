@@ -1,14 +1,16 @@
 package com.james.IKO_Myanmar.controllers;
 
+import com.james.IKO_Myanmar.dtos.ApiResponse;
+import com.james.IKO_Myanmar.dtos.UsersPaginationRequest;
 import com.james.IKO_Myanmar.models.User;
 import com.james.IKO_Myanmar.services.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin /*@Controller*/ @RestController
 class UserController {
@@ -18,66 +20,118 @@ class UserController {
         this.userService = userServiceDependency;
     }
 
-    @GetMapping("/users")
-    public ResponseEntity getUsers() {
+    @GetMapping("/users/all")
+    public ResponseEntity<ApiResponse<List<User>>> getUsers() {
         List<User> users = userService.getUsers();
 
-        ResponseEntity response =
+        ApiResponse<List<User>> apiResponse = new ApiResponse(
+                HttpStatus.OK.value(),
+                "",
+                LocalDateTime.now(),
+                users
+        );
+
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
                         .header("Content-Type", "application/json")
-                        .body(users != null ? users : Collections.emptyList());
+                        .body(
+                                users != null ? users : Collections.emptyList()
+                        );*/
 
-        return response;
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity getUsersPagination(UsersPaginationRequest usersPaginationRequest) {
+        Page<User> users = userService.getUsersPagination(usersPaginationRequest);
+
+        ApiResponse<List<User>> apiResponse = new ApiResponse(
+                HttpStatus.OK.value(),
+                "",
+                LocalDateTime.now(),
+                users
+        );
+
+        /*ResponseEntity response =
+                ResponseEntity.status(200)
+                        .header("Content-Type", "application/json")
+                        .body(users);*/
+
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity getUser(@PathVariable("id") Long id) {
-        Optional<User> optionalUser = userService.getUser(id);
-        User user = null;
-        if(optionalUser.isPresent()) {
-            user = optionalUser.get();
-        }
+    public ResponseEntity<ApiResponse<User>> getUser(@PathVariable("id") Long id) {
+        User user = userService.getUser(id);
 
-        ResponseEntity response =
+        ApiResponse<User> apiResponse = new ApiResponse(
+                HttpStatus.OK.value(),
+                "",
+                LocalDateTime.now(),
+                user
+        );
+
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
                         .header("Content-Type", "application/json")
-                        .body(user != null ? user : Collections.emptyMap());
+                        .body(user != null ? user : Collections.emptyMap());*/
 
-        return response;
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
     @PostMapping("/users")
-    public ResponseEntity postUser(@RequestBody User userData) {
+    public ResponseEntity<ApiResponse<User>> postUser(@RequestBody User userData) {
         User user = userService.createUser(userData);
 
-        ResponseEntity response =
+        ApiResponse<User> apiResponse = new ApiResponse(
+                HttpStatus.OK.value(),
+                "",
+                LocalDateTime.now(),
+                user
+        );
+
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
                         .header("Content-Type", "application/json")
-                        .body(user != null ? user : Collections.emptyMap());
+                        .body(user != null ? user : Collections.emptyMap());*/
 
-        return response;
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity putUser(@PathVariable("id") Long id, @RequestBody User userData) {
+    public ResponseEntity<ApiResponse<User>> putUser(@PathVariable("id") Long id, @RequestBody User userData) {
         User user = userService.updateUser(id, userData);
 
-        ResponseEntity response =
+        ApiResponse<User> apiResponse = new ApiResponse(
+                HttpStatus.OK.value(),
+                "",
+                LocalDateTime.now(),
+                user
+        );
+
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
                         .header("Content-Type", "application/json")
-                        .body(user != null ? user : Collections.emptyMap());
+                        .body(user != null ? user : Collections.emptyMap());*/
 
-        return response;
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity deleteUser(@PathVariable("id") Long id) {
-        boolean deleteSuccess = userService.deleteUser(id);
+    public ResponseEntity<ApiResponse<String>> deleteUser(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
 
-        ResponseEntity response =
+        ApiResponse apiResponse = new ApiResponse(
+                HttpStatus.OK.value(),
+                "",
+                LocalDateTime.now(),
+                "delete successful"
+        );
+
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
-                        .body(deleteSuccess ? "delete successful!" : "delete failed!");
+                        .body(deleteSuccess ? "delete successful!" : "delete failed!");*/
 
-        return response;
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 }

@@ -1,14 +1,17 @@
 package com.james.IKO_Myanmar.controllers;
 
+import com.james.IKO_Myanmar.dtos.ApiResponse;
+import com.james.IKO_Myanmar.dtos.ClassesPaginationRequest;
 import com.james.IKO_Myanmar.models.Class;
 import com.james.IKO_Myanmar.services.ClassService;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /*@Controller*/ @RestController
 public class ClassController {
@@ -18,7 +21,7 @@ public class ClassController {
         this.classService = classServiceDependency;
     }
 
-    @GetMapping("/classes")
+    @GetMapping("/classes/all")
     public ResponseEntity getClasses() {
         List<Class> classes = classService.getClasses();
 
@@ -30,13 +33,28 @@ public class ClassController {
         return response;
     }
 
+    @GetMapping("/classes")
+    public ResponseEntity getClassesPagination(ClassesPaginationRequest classesPaginationRequest) {
+        Page<Class> classes = classService.getClassesPagination(classesPaginationRequest);
+
+        ApiResponse apiResponse = new ApiResponse<>(
+                0000,
+                "",
+                LocalDateTime.now(),
+                classes
+        );
+
+        ResponseEntity response =
+                ResponseEntity.status(200)
+                        .header("Content-Type", "application/json")
+                        .body(apiResponse);
+
+        return response;
+    }
+
     @GetMapping("/classes/{id}")
     public ResponseEntity getClass(@PathVariable("id") Long id) {
-        Optional<Class> optionalClass = classService.getClass(id);
-        Class karateClass = null;
-        if(optionalClass.isPresent()) {
-            karateClass = optionalClass.get();
-        }
+        Class karateClass = classService.getClass(id);
 
         ResponseEntity response =
                 ResponseEntity.status(200)
@@ -72,12 +90,12 @@ public class ClassController {
 
     @DeleteMapping("/classes/{id}")
     public ResponseEntity deleteClass(@PathVariable("id") Long id) {
-        boolean deleteSuccess = classService.deleteClass(id);
+        classService.deleteClass(id);
 
-        ResponseEntity response =
+        /*ResponseEntity response =
                 ResponseEntity.status(200)
-                        .body(deleteSuccess ? "delete successful!" : "delete failed!");
+                        .body(deleteSuccess ? "delete successful!" : "delete failed!");*/
 
-        return response;
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

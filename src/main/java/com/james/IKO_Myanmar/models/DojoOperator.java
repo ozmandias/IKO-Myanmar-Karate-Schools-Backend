@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 @Entity @Table(name = "dojo_operators") @NoArgsConstructor
 public class DojoOperator {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id;
+    public Long id;
     @Column(name = "user_id", nullable = false)
-    public int userId;
+    public Long userId;
     @Column(name = "dojo_id", nullable = false)
-    public int dojoId;
+    public Long dojoId;
     @Column(name = "start_date")
     public LocalDate startDate;
     @Column(name = "create_date")
@@ -22,9 +22,9 @@ public class DojoOperator {
     public LocalDateTime updateDate;
 
     public DojoOperator(
-        int id,
-        int userId,
-        int dojoId,
+        Long id,
+        Long userId,
+        Long dojoId,
         LocalDate startDate,
         LocalDateTime createDate,
         LocalDateTime updateDate

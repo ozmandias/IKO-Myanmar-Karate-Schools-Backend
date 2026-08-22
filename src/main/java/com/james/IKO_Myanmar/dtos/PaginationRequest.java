@@ -1,6 +1,10 @@
 package com.james.IKO_Myanmar.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class PaginationRequest {
-    public Integer page;
-    public Integer size;
+    Integer page;
+    Integer size;
 }
