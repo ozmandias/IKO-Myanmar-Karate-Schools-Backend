@@ -6,4 +6,6 @@ Custom Data Types & DTO
 Mapper
 Exception
 
-Dojo -> Training -> Class
+Dojo -> Class -> Training
+
+Use enum status instead of boolean active

@@ -17,7 +17,7 @@ public class TrainerService {
     }
 
     public Trainer createTrainer(Trainer trainerData) {
-        trainerData.createDate = LocalDateTime.now();
+        trainerData.setCreateDate(LocalDateTime.now());
         return trainerRepository.save(trainerData);
     }
 
@@ -31,9 +31,9 @@ public class TrainerService {
 
     public Trainer updateTrainer(Long id, Trainer trainerData) {
         Trainer trainer = getTrainer(id);
-        trainerData.id = trainer.id;
-        trainerData.createDate = trainer.createDate;
-        trainerData.updateDate = LocalDateTime.now();
+        trainerData.setId(trainer.getId());
+        trainerData.setCreateDate(trainer.getCreateDate());
+        trainerData.setUpdateDate(LocalDateTime.now());
         trainer = trainerRepository.save(trainerData);
         return trainer;
     }

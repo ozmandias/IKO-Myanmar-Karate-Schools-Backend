@@ -16,7 +16,7 @@ public class BlogService {
     }
 
     public Blog createBlog(Blog blogData) {
-        blogData.createDate = LocalDateTime.now();
+        blogData.setCreateDate(LocalDateTime.now());
         return blogRepository.save(blogData);
     }
 
@@ -34,9 +34,9 @@ public class BlogService {
 
     public Blog updateBlog(Long id, Blog blogData) {
         Blog blog = getBlog(id);
-        blogData.id = blog.id;
-        blogData.createDate = blog.createDate;
-        blogData.updateDate = LocalDateTime.now();
+        blogData.setId(blog.getId());
+        blogData.setCreateDate(blog.getCreateDate());
+        blogData.setUpdateDate(LocalDateTime.now());
         blog = blogRepository.save(blogData);
         return blog;
     }

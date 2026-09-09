@@ -17,7 +17,7 @@ public class DojoOperatorService {
     }
 
     public DojoOperator createDojoOperator(DojoOperator dojoOperatorData) {
-        dojoOperatorData.createDate = LocalDateTime.now();
+        dojoOperatorData.setCreateDate(LocalDateTime.now());
         return dojoOperatorRepository.save(dojoOperatorData);
     }
 
@@ -31,9 +31,9 @@ public class DojoOperatorService {
 
     public DojoOperator updateDojoOperator(Long id, DojoOperator dojoOperatorData) {
         DojoOperator dojoOperator = getDojoOperator(id);
-        dojoOperatorData.id = dojoOperator.id;
-        dojoOperatorData.createDate = dojoOperator.createDate;
-        dojoOperatorData.updateDate = LocalDateTime.now();
+        dojoOperatorData.setId(dojoOperator.getId());
+        dojoOperatorData.setCreateDate(dojoOperator.getCreateDate());
+        dojoOperatorData.setUpdateDate(LocalDateTime.now());
         dojoOperator = dojoOperatorRepository.save(dojoOperatorData);
         return dojoOperator;
     }

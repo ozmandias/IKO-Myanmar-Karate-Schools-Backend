@@ -1,8 +1,8 @@
 package com.james.IKO_Myanmar.models;
 
 import com.james.IKO_Myanmar.converters.DayOfWeekSetConverter;
-import com.james.IKO_Myanmar.enums.ClassStatus;
 import com.james.IKO_Myanmar.enums.DayOfWeek;
+import com.james.IKO_Myanmar.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,8 +36,8 @@ public class Class {
     @Column(name = "opening_days", columnDefinition = "SET('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')") @Convert(converter = DayOfWeekSetConverter.class)
     Set<DayOfWeek> openingDays;
 
-    @Column(columnDefinition = "ENUM('Started', 'Finished', 'Cancelled', 'Discontinued')", nullable = false) @Enumerated(EnumType.STRING)
-    ClassStatus status;
+    @Column(columnDefinition = "ENUM('Started', 'Ended', 'Cancelled', 'Discontinued')", nullable = false) @Enumerated(EnumType.STRING)
+    Status status;
 
     @Column()
     LocalDate date;

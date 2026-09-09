@@ -1,6 +1,6 @@
 package com.james.IKO_Myanmar.repositories;
 
-import com.james.IKO_Myanmar.enums.ClassStatus;
+import com.james.IKO_Myanmar.enums.Status;
 import com.james.IKO_Myanmar.models.Class;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +18,7 @@ public interface ClassRepository extends ListCrudRepository<Class, Long> {
     Page<Class> findAllBy(
             @Param("name") String name,
             @Param("dojoId") Long dojoId,
-            @Param("status")ClassStatus status,
+            @Param("status") Status status,
             Pageable pageable
     );
 }

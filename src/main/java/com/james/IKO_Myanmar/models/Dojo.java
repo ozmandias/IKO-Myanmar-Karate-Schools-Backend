@@ -1,6 +1,6 @@
 package com.james.IKO_Myanmar.models;
 
-import com.james.IKO_Myanmar.enums.DojoStatus;
+import com.james.IKO_Myanmar.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,16 +23,20 @@ public class Dojo {
     @Column(nullable = false)
     String address;
 
+    @Column(nullable = true)
     String state;
 
+    @Column(nullable = true)
     String city;
-
+    
+    @Column(nullable = true)
     String township;
 
+    @Column(nullable = true)
     String street;
 
     @Column(columnDefinition = "ENUM('Open', 'Closed', 'Repairing', 'Defunct')", nullable = false) @Enumerated(EnumType.STRING)
-    DojoStatus status;
+    Status status;
 
     @Column(name = "start_date")
     LocalDate startDate;

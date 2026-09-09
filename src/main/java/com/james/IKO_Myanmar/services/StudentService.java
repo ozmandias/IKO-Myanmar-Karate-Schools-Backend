@@ -16,7 +16,7 @@ public class StudentService {
     }
 
     public Student createStudent(Student studentData) {
-        studentData.createDate = LocalDateTime.now();
+        studentData.setCreateDate(LocalDateTime.now());
         return studentRepository.save(studentData);
     }
 
@@ -34,9 +34,9 @@ public class StudentService {
 
     public Student updateStudent(Long id, Student studentData) {
         Student student = getStudent(id);
-        studentData.id = student.id;
-        studentData.createDate = student.createDate;
-        studentData.updateDate = LocalDateTime.now();
+        studentData.setId(student.getId());
+        studentData.setCreateDate(student.getCreateDate());
+        studentData.setUpdateDate(LocalDateTime.now());
         student = studentRepository.save(studentData);
         return student;
     }

@@ -32,7 +32,7 @@ public class RankService {
 
     public Rank updateRank(int id, Rank rankData) {
         Rank rank = getRank(id);
-        rankData.id = rank.id;
+        rankData.setId(rank.getId());
         rank = rankRepository.save(rankData);
         return rank;
     }

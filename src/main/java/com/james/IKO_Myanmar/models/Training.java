@@ -1,6 +1,6 @@
 package com.james.IKO_Myanmar.models;
 
-import com.james.IKO_Myanmar.enums.TrainingStatus;
+import com.james.IKO_Myanmar.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +24,7 @@ public class Training {
     Long classId;
 
     @Column(columnDefinition = "ENUM('Ongoing', 'Ended')", nullable = false) @Enumerated(EnumType.STRING)
-    TrainingStatus status;
+    Status status;
 
     @Column()
     LocalDate date;

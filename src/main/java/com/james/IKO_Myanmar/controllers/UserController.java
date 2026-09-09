@@ -45,7 +45,7 @@ class UserController {
     public ResponseEntity getUsersPagination(UsersPaginationRequest usersPaginationRequest) {
         Page<User> users = userService.getUsersPagination(usersPaginationRequest);
 
-        ApiResponse<List<User>> apiResponse = new ApiResponse(
+        ApiResponse<Page<User>> apiResponse = new ApiResponse(
                 HttpStatus.OK.value(),
                 "",
                 LocalDateTime.now(),

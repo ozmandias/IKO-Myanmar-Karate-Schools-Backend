@@ -1,12 +1,12 @@
 package com.james.IKO_Myanmar.models;
 
-import com.james.IKO_Myanmar.enums.ProfileType;
-import com.james.IKO_Myanmar.enums.UserGender;
-import com.james.IKO_Myanmar.enums.UserStatus;
-import com.james.IKO_Myanmar.enums.UserType;
+import com.james.IKO_Myanmar.enums.Gender;
+import com.james.IKO_Myanmar.enums.Status;
+import com.james.IKO_Myanmar.enums.Type;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity @Table(name = "users")
@@ -35,10 +35,16 @@ public class User {
     String address;
 
     @Column(columnDefinition = "ENUM('Male', 'Female') DEFAULT 'Male'", nullable = false) @Enumerated(EnumType.STRING)
-    UserGender gender;
+    Gender gender;
+
+    @Column(name = "date_of_birth", nullable = true)
+    LocalDate dateOfBirth;
+
+    @Column(name = "age", nullable = true)
+    Integer age;
 
     @Column(name = "rank_id", nullable = false)
-    int rankId;
+    Integer rankId;
 
     @Column(name = "nrc_number")
     String nrcNumber;
@@ -47,13 +53,13 @@ public class User {
     String internationalCard;
 
     @Column(name = "user_type", nullable = false) @Enumerated(EnumType.STRING)
-    UserType userType;
+    Type userType;
 
     @Column(name = "profile_type", nullable = false) @Enumerated(EnumType.STRING)
-    ProfileType profileType;
+    Type profileType;
 
     @Column(nullable = false) @Enumerated(EnumType.STRING)
-    UserStatus status;
+    Status status;
 
     @Column(name = "create_date")
     LocalDateTime createDate;

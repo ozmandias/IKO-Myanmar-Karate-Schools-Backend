@@ -1,11 +1,10 @@
 package com.james.IKO_Myanmar.repositories;
 
-import com.james.IKO_Myanmar.enums.UserGender;
+import com.james.IKO_Myanmar.enums.Gender;
+import com.james.IKO_Myanmar.enums.Status;
+import com.james.IKO_Myanmar.enums.Type;
 import org.springframework.stereotype.Component;
 import com.james.IKO_Myanmar.models.User;
-import com.james.IKO_Myanmar.enums.ProfileType;
-import com.james.IKO_Myanmar.enums.UserStatus;
-import com.james.IKO_Myanmar.enums.UserType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 
@@ -85,13 +84,15 @@ public class UserSQLRepository {
                                         resultSet.getString("password"),
                                         resultSet.getString("phone"),
                                         resultSet.getString("address"),
-                                        UserGender.valueOf(resultSet.getString("gender")),
+                                        Gender.valueOf(resultSet.getString("gender")),
+                                        null,
+                                        null,
                                         resultSet.getInt("rank_id"),
                                         resultSet.getString("nrc_number"),
                                         resultSet.getString("international_card"),
-                                        UserType.valueOf(resultSet.getString("user_type")),
-                                        ProfileType.valueOf(resultSet.getString("profile_type")),
-                                        UserStatus.valueOf(resultSet.getString("status")),
+                                        Type.valueOf(resultSet.getString("user_type")),
+                                        Type.valueOf(resultSet.getString("profile_type")),
+                                        Status.valueOf(resultSet.getString("status")),
                                         resultSet.getTimestamp("create_date") != null ? resultSet.getTimestamp("create_date").toLocalDateTime() : null,
                                         resultSet.getTimestamp("update_date") != null ? resultSet.getTimestamp("update_date").toLocalDateTime() : null
                                 );
@@ -137,13 +138,15 @@ public class UserSQLRepository {
                                             resultSet.getString("password"),
                                             resultSet.getString("phone"),
                                             resultSet.getString("address"),
-                                            UserGender.valueOf(resultSet.getString("gender")),
+                                            Gender.valueOf(resultSet.getString("gender")),
+                                            null,
+                                            null,
                                             resultSet.getInt("rank_id"),
                                             resultSet.getString("nrc_number"),
                                             resultSet.getString("international_card"),
-                                            UserType.valueOf(resultSet.getString("user_type")),
-                                            ProfileType.valueOf(resultSet.getString("profile_type")),
-                                            UserStatus.valueOf(resultSet.getString("status")),
+                                            Type.valueOf(resultSet.getString("user_type")),
+                                            Type.valueOf(resultSet.getString("profile_type")),
+                                            Status.valueOf(resultSet.getString("status")),
                                             resultSet.getTimestamp("create_date") != null ? resultSet.getTimestamp("create_date").toLocalDateTime() : null,
                                             resultSet.getTimestamp("update_date") != null ? resultSet.getTimestamp("update_date").toLocalDateTime() : null
                                     )
@@ -187,13 +190,15 @@ public class UserSQLRepository {
                                     resultSet.getString("password"),
                                     resultSet.getString("phone"),
                                     resultSet.getString("address"),
-                                    UserGender.valueOf(resultSet.getString("gender")),
+                                    Gender.valueOf(resultSet.getString("gender")),
+                                    null,
+                                    null,
                                     resultSet.getInt("rank_id"),
                                     resultSet.getString("nrc_number"),
                                     resultSet.getString("international_card"),
-                                    UserType.valueOf(resultSet.getString("user_type")),
-                                    ProfileType.valueOf(resultSet.getString("profile_type")),
-                                    UserStatus.valueOf(resultSet.getString("status")),
+                                    Type.valueOf(resultSet.getString("user_type")),
+                                    Type.valueOf(resultSet.getString("profile_type")),
+                                    Status.valueOf(resultSet.getString("status")),
                                     resultSet.getTimestamp("create_date") != null ? resultSet.getTimestamp("create_date").toLocalDateTime() : null,
                                     resultSet.getTimestamp("update_date") != null ? resultSet.getTimestamp("update_date").toLocalDateTime() : null
                             );
@@ -271,13 +276,15 @@ public class UserSQLRepository {
                                         resultSet.getString("password"),
                                         resultSet.getString("phone"),
                                         resultSet.getString("address"),
-                                        UserGender.valueOf(resultSet.getString("gender")),
+                                        Gender.valueOf(resultSet.getString("gender")),
+                                        null,
+                                        null,
                                         resultSet.getInt("rank_id"),
                                         resultSet.getString("nrc_number"),
                                         resultSet.getString("international_card"),
-                                        UserType.valueOf(resultSet.getString("user_type")),
-                                        ProfileType.valueOf(resultSet.getString("profile_type")),
-                                        UserStatus.valueOf(resultSet.getString("status")),
+                                        Type.valueOf(resultSet.getString("user_type")),
+                                        Type.valueOf(resultSet.getString("profile_type")),
+                                        Status.valueOf(resultSet.getString("status")),
                                         resultSet.getTimestamp("create_date") != null ? resultSet.getTimestamp("create_date").toLocalDateTime() : null,
                                         resultSet.getTimestamp("update_date") != null ? resultSet.getTimestamp("update_date").toLocalDateTime() : null
                                 );
