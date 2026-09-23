@@ -8,6 +8,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity @Table(name = "users")
 @AllArgsConstructor @NoArgsConstructor
@@ -60,6 +62,9 @@ public class User {
 
     @Column(nullable = false) @Enumerated(EnumType.STRING)
     Status status;
+
+    @OneToMany(mappedBy = "awardeeUser", cascade = CascadeType.REMOVE)
+    List<Award> awards = new ArrayList<>();
 
     @Column(name = "create_date")
     LocalDateTime createDate;

@@ -34,6 +34,8 @@ public class UserSQLRepository {
                             "profile_type, status, create_date) " +
                             "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
+            // sql for awards
+
             boolean create_success = jdbcTemplate.execute(
                     sql,
                     (PreparedStatementCallback<Boolean>) (statement) -> {
@@ -71,6 +73,8 @@ public class UserSQLRepository {
                                 "ORDER BY id DESC " +
                                 "LIMIT 1;";
 
+                // sql for awards
+
                 user = jdbcTemplate.execute(
                         sql,
                         (PreparedStatementCallback<User>) (statement) -> {
@@ -93,6 +97,7 @@ public class UserSQLRepository {
                                         Type.valueOf(resultSet.getString("user_type")),
                                         Type.valueOf(resultSet.getString("profile_type")),
                                         Status.valueOf(resultSet.getString("status")),
+                                        new ArrayList<>(),
                                         resultSet.getTimestamp("create_date") != null ? resultSet.getTimestamp("create_date").toLocalDateTime() : null,
                                         resultSet.getTimestamp("update_date") != null ? resultSet.getTimestamp("update_date").toLocalDateTime() : null
                                 );
@@ -122,6 +127,8 @@ public class UserSQLRepository {
                             "ORDER BY id ASC " +
                             "LIMIT 100;";
 
+            // sql for awards
+
             users = jdbcTemplate.execute(
                     sql,
                     (PreparedStatementCallback<List<User>>) (statement) -> {
@@ -147,6 +154,7 @@ public class UserSQLRepository {
                                             Type.valueOf(resultSet.getString("user_type")),
                                             Type.valueOf(resultSet.getString("profile_type")),
                                             Status.valueOf(resultSet.getString("status")),
+                                            new ArrayList<>(),
                                             resultSet.getTimestamp("create_date") != null ? resultSet.getTimestamp("create_date").toLocalDateTime() : null,
                                             resultSet.getTimestamp("update_date") != null ? resultSet.getTimestamp("update_date").toLocalDateTime() : null
                                     )
@@ -175,6 +183,8 @@ public class UserSQLRepository {
                             "FROM users " +
                             "WHERE id=?;";
 
+            // sql for awards
+
             user = jdbcTemplate.execute(
                     sql,
                     (PreparedStatementCallback<User>) (statement) -> {
@@ -199,6 +209,7 @@ public class UserSQLRepository {
                                     Type.valueOf(resultSet.getString("user_type")),
                                     Type.valueOf(resultSet.getString("profile_type")),
                                     Status.valueOf(resultSet.getString("status")),
+                                    new ArrayList<>(),
                                     resultSet.getTimestamp("create_date") != null ? resultSet.getTimestamp("create_date").toLocalDateTime() : null,
                                     resultSet.getTimestamp("update_date") != null ? resultSet.getTimestamp("update_date").toLocalDateTime() : null
                             );
@@ -223,6 +234,8 @@ public class UserSQLRepository {
                             "address=?, gender=?, rank_id=?, nrc_number=?, international_card=?, " +
                             "user_type=?, profile_type=?, status=?, update_date=? " +
                             "WHERE id=?;";
+
+            // sql for awards
 
             boolean update_success = jdbcTemplate.execute(
                     sql,
@@ -261,6 +274,8 @@ public class UserSQLRepository {
                                 "FROM users " +
                                 "WHERE id=?;";
 
+                // sql for awards
+
                 user = jdbcTemplate.execute(
                         sql,
                         (PreparedStatementCallback<User>) (statement) -> {
@@ -285,6 +300,7 @@ public class UserSQLRepository {
                                         Type.valueOf(resultSet.getString("user_type")),
                                         Type.valueOf(resultSet.getString("profile_type")),
                                         Status.valueOf(resultSet.getString("status")),
+                                        new ArrayList<>(),
                                         resultSet.getTimestamp("create_date") != null ? resultSet.getTimestamp("create_date").toLocalDateTime() : null,
                                         resultSet.getTimestamp("update_date") != null ? resultSet.getTimestamp("update_date").toLocalDateTime() : null
                                 );

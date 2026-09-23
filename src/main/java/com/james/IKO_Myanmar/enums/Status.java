@@ -6,6 +6,10 @@ public enum Status {
     Inactive,
     Deactivated,
 
+    // Award
+    Valid,
+    Invalid,
+
     // Blog
     Published,
     Draft,
