@@ -1,7 +1,11 @@
 package com.james.IKO_Myanmar.services;
 
+import com.james.IKO_Myanmar.dtos.BlogsPaginationRequest;
 import com.james.IKO_Myanmar.models.Blog;
 import com.james.IKO_Myanmar.repositories.BlogRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,8 +28,15 @@ public class BlogService {
         return blogRepository.findAll();
     }
 
-    public List<Blog> getBlogsPagination() {
-        return null;
+    public Page<Blog> getBlogsPagination(BlogsPaginationRequest blogsPaginationRequest) {
+        Pageable pageable = PageRequest.of(blogsPaginationRequest.getPage(), blogsPaginationRequest.getSize());
+        Page<Blog> blogsPagination = blogRepository.findAllBy(
+                blogsPaginationRequest.getTitle(),
+                blogsPaginationRequest.getText(),
+                blogsPaginationRequest.getPublishDate(),
+                pageable
+        );
+        return blogsPagination;
     }
 
     public Blog getBlog(Long id) {

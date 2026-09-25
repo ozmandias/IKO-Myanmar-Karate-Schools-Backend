@@ -1,7 +1,7 @@
 package com.james.IKO_Myanmar.controllers;
 
 import com.james.IKO_Myanmar.dtos.ApiResponse;
-import com.james.IKO_Myanmar.dtos.AwardPaginationRequest;
+import com.james.IKO_Myanmar.dtos.AwardsPaginationRequest;
 import com.james.IKO_Myanmar.models.Award;
 import com.james.IKO_Myanmar.services.AwardService;
 import com.james.IKO_Myanmar.types.ApiData;
@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -31,8 +30,8 @@ public class AwardController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ApiResponse<PaginationData<Award>>> getAwardsPagination(AwardPaginationRequest awardPaginationRequest) {
-        PaginationData<Award> awardPagination = awardService.getAwardPagination(awardPaginationRequest);
+    public ResponseEntity<ApiResponse<PaginationData<Award>>> getAwardsPagination(AwardsPaginationRequest awardsPaginationRequest) {
+        PaginationData<Award> awardPagination = awardService.getAwardPagination(awardsPaginationRequest);
 
         ApiResponse<PaginationData<Award>> apiResponse = ApiResponse.ok(awardPagination, "");
 

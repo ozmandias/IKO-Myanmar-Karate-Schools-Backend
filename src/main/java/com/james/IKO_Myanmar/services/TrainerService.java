@@ -1,8 +1,12 @@
 package com.james.IKO_Myanmar.services;
 
+import com.james.IKO_Myanmar.dtos.TrainersPaginationRequest;
 import com.james.IKO_Myanmar.exceptions.NotFoundException;
 import com.james.IKO_Myanmar.models.Trainer;
 import com.james.IKO_Myanmar.repositories.TrainerRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,6 +27,12 @@ public class TrainerService {
 
     public List<Trainer> getTrainers() {
         return trainerRepository.findAll();
+    }
+
+    public Page<Trainer> getTrainersPagination(TrainersPaginationRequest trainersPaginationRequest) {
+        Pageable pageable = PageRequest.of(trainersPaginationRequest.getPage(), trainersPaginationRequest.getSize());
+        Page<Trainer> trainersPagination = trainerRepository.findAllBy(trainersPaginationRequest.getName(), trainersPaginationRequest.getRankId(), trainersPaginationRequest.getServiceStartDate(), pageable);
+        return trainersPagination;
     }
 
     public Trainer getTrainer(Long id) {

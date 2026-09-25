@@ -1,7 +1,11 @@
 package com.james.IKO_Myanmar.services;
 
+import com.james.IKO_Myanmar.dtos.StudentsPaginationRequest;
 import com.james.IKO_Myanmar.models.Student;
 import com.james.IKO_Myanmar.repositories.StudentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,8 +28,10 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public List<Student> getStudentsPagination() {
-        return null;
+    public Page<Student> getStudentsPagination(StudentsPaginationRequest studentsPaginationRequest) {
+        Pageable pageable = PageRequest.of(studentsPaginationRequest.getPage(), studentsPaginationRequest.getSize());
+        Page<Student> studentsPagination = studentRepository.findAllBy(studentsPaginationRequest.getName(), studentsPaginationRequest.getRankId(), studentsPaginationRequest.getJoinDate(), pageable);
+        return studentsPagination;
     }
 
     public Student getStudent(Long id) {

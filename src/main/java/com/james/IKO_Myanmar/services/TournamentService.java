@@ -1,6 +1,6 @@
 package com.james.IKO_Myanmar.services;
 
-import com.james.IKO_Myanmar.dtos.TournamentPaginationRequest;
+import com.james.IKO_Myanmar.dtos.TournamentsPaginationRequest;
 import com.james.IKO_Myanmar.exceptions.NotFoundException;
 import com.james.IKO_Myanmar.models.Tournament;
 import com.james.IKO_Myanmar.repositories.TournamentRepository;
@@ -30,13 +30,14 @@ public class TournamentService {
         return tournamentRepository.findAll();
     }
 
-    public Tournament getTournament(Long id) {
-        return tournamentRepository.findById(id).orElseThrow(() -> new NotFoundException("Tournament with id: " + id + " not found!"));
+    public Page<Tournament> getTournamentsPagination(TournamentsPaginationRequest tournamentsPaginationRequest) {
+        Pageable pageable = PageRequest.of(tournamentsPaginationRequest.getPage(), tournamentsPaginationRequest.getSize());
+        Page<Tournament> tournamentsPagination = tournamentRepository.findAllBy(tournamentsPaginationRequest.getName(), tournamentsPaginationRequest.getDate(), tournamentsPaginationRequest.getType(), pageable);
+        return tournamentsPagination;
     }
 
-    public Page<Tournament> getTournamentPagination(TournamentPaginationRequest tournamentPaginationRequest) {
-        Pageable pageable = PageRequest.of(tournamentPaginationRequest.getPage(), tournamentPaginationRequest.getSize());
-        return tournamentRepository.findAllBy(tournamentPaginationRequest.getName(), tournamentPaginationRequest.getDate(), tournamentPaginationRequest.getType(), pageable);
+    public Tournament getTournament(Long id) {
+        return tournamentRepository.findById(id).orElseThrow(() -> new NotFoundException("Tournament with id: " + id + " not found!"));
     }
 
     public Tournament updateTournament(Long id, Tournament tournamentData) {

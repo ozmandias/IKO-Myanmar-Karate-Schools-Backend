@@ -1,7 +1,11 @@
 package com.james.IKO_Myanmar.services;
 
+import com.james.IKO_Myanmar.dtos.RanksPaginationRequest;
 import com.james.IKO_Myanmar.models.Rank;
 import com.james.IKO_Myanmar.repositories.RankRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +26,10 @@ public class RankService {
         return rankRepository.findAll();
     }
 
-    public List<Rank> getRanksPagination() {
-        return null;
+    public Page<Rank> getRanksPagination(RanksPaginationRequest ranksPaginationRequest) {
+        Pageable pageable = PageRequest.of(ranksPaginationRequest.getPage(), ranksPaginationRequest.getSize());
+        Page<Rank> ranksPagination = rankRepository.findAllBy(ranksPaginationRequest.getTitle(), pageable);
+        return ranksPagination;
     }
 
     public Rank getRank(int id) {

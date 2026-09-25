@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
-public class TournamentPaginationRequest extends PaginationRequest{
+public class TournamentsPaginationRequest extends PaginationRequest{
     String name;
     LocalDate date;
     Type type;
