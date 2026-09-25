@@ -5,13 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
-public class ErrorResponse {
-    int statusCode;
-    String error;
-    String description;
-    LocalDateTime timestamp;
+public class AwardPaginationRequest extends PaginationRequest{
+    String name;
+    LocalDate awardDate;
 }

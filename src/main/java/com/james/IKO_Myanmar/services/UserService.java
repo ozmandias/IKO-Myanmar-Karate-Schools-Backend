@@ -5,6 +5,9 @@ import com.james.IKO_Myanmar.exceptions.NotFoundException;
 import com.james.IKO_Myanmar.repositories.UserSQLRepository;
 import com.james.IKO_Myanmar.models.User;
 import com.james.IKO_Myanmar.repositories.UserRepository;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,17 +27,21 @@ public class UserService {
         this.userRepository = userRepositoryDependency;
     }
 
+    @CachePut(value = "user", key = "#result.id")
+    @CacheEvict(value = "users", allEntries = true)
     public User createUser(User userData) {
         // return userSQLRepository.create(userData);
         userData.setCreateDate(LocalDateTime.now());
         return userRepository.save(userData);
     }
 
+    @Cacheable(value = "users")
     public List<User> getUsers() {
         // return userSQLRepository.getAll();
         return userRepository.findAll();
     }
 
+    @Cacheable(value = "users", key = "{#usersPaginationRequest.page, #usersPaginationRequest.size, #usersPaginationRequest.username, #usersPaginationRequest.fullName, #usersPaginationRequest.email, #usersPaginationRequest.phone}")
     public Page<User> getUsersPagination(UsersPaginationRequest usersPaginationRequest) {
         Pageable pageable = PageRequest.of(usersPaginationRequest.getPage(), usersPaginationRequest.getSize(), Sort.by("id").descending());
         Page<User> usersPagination = userRepository.findAllBy(
@@ -47,11 +54,14 @@ public class UserService {
         return usersPagination;
     }
 
+    @Cacheable(value = "user", key = "#id")
     public User getUser(Long id) {
         // return userSQLRepository.getById(id);
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User with id: " + id + " not found!"));
     }
 
+    @CachePut(value = "user", key = "#id")
+    @CacheEvict(value = "users", allEntries = true)
     public User updateUser(Long id, User userData) {
         // return userSQLRepository.update(id, userData);
         User user = getUser(id);
@@ -62,6 +72,7 @@ public class UserService {
         return user;
     }
 
+    @CacheEvict(value = "user", key = "#id")
     public void deleteUser(Long id) {
         // return userSQLRepository.delete(id);
         User user = getUser(id);

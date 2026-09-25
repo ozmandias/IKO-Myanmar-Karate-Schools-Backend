@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin /*@Controller*/ @RestController
-class UserController {
+public class UserController {
     private final UserService userService;
 
     public UserController(UserService userServiceDependency) {

@@ -6,8 +6,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 @NoArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 @Builder
 public class PaginationData<T> {
     List<T> content;
