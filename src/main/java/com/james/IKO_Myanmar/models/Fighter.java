@@ -2,10 +2,7 @@ package com.james.IKO_Myanmar.models;
 
 import com.james.IKO_Myanmar.enums.Gender;
 import com.james.IKO_Myanmar.enums.Status;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +19,12 @@ public class Fighter {
     @Id
     Long id;
 
-    @Column(name = "user_id", nullable = false)
-    Long userId;
+    /*@Column(name = "user_id", nullable = false)
+    Long userId;*/
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    User user;
 
     @Column(nullable = false)
     String name;
@@ -32,6 +33,7 @@ public class Fighter {
     Integer age;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     Gender gender;
 
     @Column(name="weight_in_kg", nullable = false)
@@ -41,6 +43,7 @@ public class Fighter {
     Integer weightInLb;
 
     @Column(columnDefinition = "ENUM('Active', 'Inactive', 'Deactivated')", nullable = false)
+    @Enumerated(EnumType.STRING)
     Status status;
 
     @Column(name="register_date")
