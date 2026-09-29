@@ -1,12 +1,15 @@
 package com.james.IKO_Myanmar.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.james.IKO_Myanmar.enums.Gender;
+import com.james.IKO_Myanmar.enums.Status;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="performers")
@@ -15,4 +18,37 @@ import lombok.Setter;
 public class Performer {
     @Id
     Long id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    Long userId;
+
+    @Column(nullable = false)
+    String name;
+
+    @Column(nullable = false)
+    Integer age;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    Gender gender;
+
+    @Column(name="weight_in_kg", nullable = false)
+    Integer weightInKg;
+
+    @Column(name="weight_in_lb")
+    Integer weightInLb;
+
+    @Column(columnDefinition = "ENUM('Active', 'Inactive', 'Deactivated')", nullable = false)
+    @Enumerated(EnumType.STRING)
+    Status status;
+
+    @Column(name="register_date")
+    LocalDate registerDate;
+
+    @Column(name="create_date")
+    LocalDateTime createDate;
+
+    @Column(name="update_date")
+    LocalDateTime updateDate;
 }

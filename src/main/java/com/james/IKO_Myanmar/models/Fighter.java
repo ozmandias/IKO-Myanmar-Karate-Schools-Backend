@@ -52,6 +52,6 @@ public class Fighter {
     @Column(name="create_date")
     LocalDateTime createDate;
 
-    @Column(name="updaet_date")
+    @Column(name="update_date")
     LocalDateTime updateDate;
 }
