@@ -4,6 +4,7 @@ import com.james.IKO_Myanmar.dtos.ApiResponse;
 import com.james.IKO_Myanmar.dtos.DojosPaginationRequest;
 import com.james.IKO_Myanmar.models.Dojo;
 import com.james.IKO_Myanmar.services.DojoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 /*@Controller*/ @RestController
+@Tag(name = "Dojo", description = "APIs to manage Dojo")
 public class DojoController {
     private final DojoService dojoService;
 

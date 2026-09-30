@@ -32,7 +32,7 @@ public class FighterService {
 
     public Page<Fighter> getFightersPagination(FightersPaginationRequest fightersPaginationRequest) {
         Pageable pageable = PageRequest.of(fightersPaginationRequest.getPage(), fightersPaginationRequest.getSize());
-        Page<Fighter> fighersPagination = fighterRepository.findAllBy(
+        Page<Fighter> fightersPagination = fighterRepository.findAllBy(
             fightersPaginationRequest.getName(),
             fightersPaginationRequest.getAge(),
             fightersPaginationRequest.getGender(),
@@ -41,7 +41,7 @@ public class FighterService {
             fightersPaginationRequest.getRegisterDate(),
             pageable
         );
-        return fighersPagination;
+        return fightersPagination;
     }
 
     public Fighter getFighter(Long id) {

@@ -6,6 +6,7 @@ import com.james.IKO_Myanmar.models.Fighter;
 import com.james.IKO_Myanmar.services.FighterService;
 import com.james.IKO_Myanmar.types.ApiData;
 import com.james.IKO_Myanmar.types.PaginationData;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/fighters")
+@Tag(name = "Kumite Fighter", description = "APIs to manage Kumite Fighter")
 @RequiredArgsConstructor
 public class FighterController {
     private final FighterService fighterService;

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 public class Match {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(nullable = false)

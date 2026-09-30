@@ -2,6 +2,7 @@ package com.james.IKO_Myanmar.controllers;
 
 import com.james.IKO_Myanmar.models.Blog;
 import com.james.IKO_Myanmar.services.BlogService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 /*@Controller*/ @RestController
+@Tag(name = "Blog", description = "APIs to manage Blog")
 public class BlogController {
     private final BlogService blogService;
 

@@ -2,6 +2,7 @@ package com.james.IKO_Myanmar.controllers;
 
 import com.james.IKO_Myanmar.models.DojoOperator;
 import com.james.IKO_Myanmar.services.DojoOperatorService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 /*@Controller*/ @RestController
+@Tag(name = "Dojo Operator", description = "APIs to manage Dojo Operator")
 public class DojoOperatorController {
     private final DojoOperatorService dojoOperatorService;
 

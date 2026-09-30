@@ -16,12 +16,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 public class Performer {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
-    Long userId;
+    User user;
 
     @Column(nullable = false)
     String name;

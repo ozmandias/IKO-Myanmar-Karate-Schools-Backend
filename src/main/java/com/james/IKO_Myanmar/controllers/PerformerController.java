@@ -6,6 +6,7 @@ import com.james.IKO_Myanmar.models.Performer;
 import com.james.IKO_Myanmar.services.PerformerService;
 import com.james.IKO_Myanmar.types.ApiData;
 import com.james.IKO_Myanmar.types.PaginationData;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/performers")
+@Tag(name = "Kata Performers", description = "APIs to manage Kata Performers")
 @RequiredArgsConstructor
 public class PerformerController {
     private final PerformerService performerService;

@@ -4,6 +4,7 @@ import com.james.IKO_Myanmar.dtos.ApiResponse;
 import com.james.IKO_Myanmar.dtos.TrainingsPaginationRequest;
 import com.james.IKO_Myanmar.models.Training;
 import com.james.IKO_Myanmar.services.TrainingService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 /*@Controller*/ @RestController
+@Tag(name = "Training", description = "APIs to manage Training")
 public class TrainingController {
     private final TrainingService trainingService;
 

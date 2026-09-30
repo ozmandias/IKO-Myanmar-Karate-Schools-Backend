@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 public class Fighter {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     /*@Column(name = "user_id", nullable = false)

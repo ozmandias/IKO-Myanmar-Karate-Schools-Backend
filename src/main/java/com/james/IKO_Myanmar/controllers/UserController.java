@@ -4,6 +4,7 @@ import com.james.IKO_Myanmar.dtos.ApiResponse;
 import com.james.IKO_Myanmar.dtos.UsersPaginationRequest;
 import com.james.IKO_Myanmar.models.User;
 import com.james.IKO_Myanmar.services.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin /*@Controller*/ @RestController
+@Tag(name = "User", description = "APIs to manage User")
 public class UserController {
     private final UserService userService;
 

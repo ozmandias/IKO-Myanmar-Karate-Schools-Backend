@@ -6,6 +6,7 @@ import com.james.IKO_Myanmar.models.Award;
 import com.james.IKO_Myanmar.services.AwardService;
 import com.james.IKO_Myanmar.types.ApiData;
 import com.james.IKO_Myanmar.types.PaginationData;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/awards")
+@Tag(name = "Award", description = "APIs to manage Award")
 @RequiredArgsConstructor
 public class AwardController {
     private final AwardService awardService;

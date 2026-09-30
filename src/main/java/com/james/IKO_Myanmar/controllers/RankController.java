@@ -2,6 +2,7 @@ package com.james.IKO_Myanmar.controllers;
 
 import com.james.IKO_Myanmar.models.Rank;
 import com.james.IKO_Myanmar.services.RankService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 /*@Controller*/ @RestController
+@Tag(name = "Rank", description = "APIs to manage Rank")
 public class RankController {
     private final RankService rankService;
 
